@@ -4,11 +4,14 @@ import pylab as pl
 
 class Lattice:
 
-    def __init__(self,n=10,state=0.5,J=1):
+    k = 1.38e-23
+
+    def __init__(self,n=10,state=0.5,J=1,T=300):
         """Constructor..."""
         self.n = n
         self.spins = -1 * pl.ones((n,n))
         self.J = J
+        self.T=T
 
         for i in xrange(n):
             for j in xrange(n):
@@ -22,7 +25,6 @@ class Lattice:
 
     def H(self):
         """Calculates the total energy of the lattice"""
-
         E = 0
 
         for i in xrange(0,self.n,2):
@@ -31,10 +33,16 @@ class Lattice:
 
         return E
 
-    def get_site(self):
+    def beta(self):
+        """Calculates the value of beta for the given lattice temperature"""
+        return 1/(self.k * self.T)
+
+    def getsite(self):
         """Returns tuple to random point on the lattice
         (Selection probability)"""
 
         return (pl.randint(0,self.n),pl.randint(0,self.n))
+
+    def spinflip
 
     
