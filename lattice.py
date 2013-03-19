@@ -8,7 +8,7 @@ class Lattice:
         """Constructor..."""
         self.n = n
 
-        self.spins = -1 * pl.ones(1,(n,n))
+        self.spins = -1 * pl.ones((n,n))
 
         for i in xrange(n):
             for j in xrange(n):
