@@ -16,7 +16,7 @@ class Lattice:
 
         for i in xrange(n):
             for j in xrange(n):
-                if pl.random() > (1 + state) / 2:
+                if pl.random() > (1 + state) / 2.:
                     self.spins[i,j] = 1
 
     def Hij(self,(i,j)):
