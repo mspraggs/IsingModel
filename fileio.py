@@ -14,6 +14,8 @@ def readdata(filename):
 
     lines = f.readlines()
 
+    f.close()
+
     return [eval(line[:-1]) for line in lines]
 
 def parsefilename(filename):
