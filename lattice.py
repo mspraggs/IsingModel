@@ -14,5 +14,3 @@ class Lattice:
             for j in xrange(n):
                 if pl.random() > (1 + state) / 2:
                     self.spins[i,j] = 1
-
-        
