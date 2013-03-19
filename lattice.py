@@ -1,6 +1,7 @@
 """Class for lattice object. Contains spin states etc."""
 
 import pylab as pl
+import copy
 
 class Lattice:
 
@@ -40,12 +41,29 @@ class Lattice:
     def getsite(self):
         """Returns tuple to random point on the lattice
         (Selection probability)"""
-
         return (pl.randint(0,self.n),pl.randint(0,self.n))
 
     def spinflip(self,(i,j)):
         """Flips the spin at site i,j"
         self.spins[i,j] = 1 if self.spins[i,j] == -1 else 1
-        
 
-    
+    def probaccept(self,Ediff):
+        """Calculates the probability of acceptance of a configuration that
+        has energy difference Ediff from current configuration"""
+
+        return 1 if Ediff < 0 else pl.exp(-self.beta()*Ediff)
+        
+    def step(self):
+        """Run one step of the Metropolis algorithm"""
+        site = self.getsite()
+        #Copy the lattice and flip a particular site
+        newLattice = copy.deepcopy(self)
+        newLattice.spinflip(site)
+        
+        #Now need to work out the energy difference between the lattices.
+        #This is used to determine the probability that we'll keep the
+        #new configuration.
+        Ediff = newLattice.H() - self.H()
+        AP = self.probaccept(Ediff)
+
+        
