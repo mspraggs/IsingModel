@@ -39,7 +39,7 @@ class Lattice:
 
     def beta(self):
         """Calculates the value of beta for the given lattice temperature"""
-        return 1/(self.k * self.T)
+        return 1/(self.k * self.T) if self.T > 0 else float("inf")
 
     def getsite(self):
         """Returns tuple to random point on the lattice
@@ -53,8 +53,8 @@ class Lattice:
     def probaccept(self,Ediff):
         """Calculates the probability of acceptance of a configuration that
         has energy difference Ediff from current configuration"""
-
-        return 1 if Ediff < 0 else pl.exp(-self.beta()*Ediff)
+        if self.T == 0: return 0
+        else: return 1 if Ediff < 0 else pl.exp(-self.beta()*Ediff)
         
     def step(self):
         """Run one step of the Metropolis algorithm"""
