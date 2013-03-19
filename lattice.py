@@ -7,7 +7,7 @@ class Lattice:
 
     k = 1#.38e-23
 
-    def __init__(self,n=10,state=0.5,J=1,T=300):
+    def __init__(self,n=10,state=0.5,J=1,T=2):
         """Constructor..."""
         self.n = n
         self.spins = -1 * pl.ones((n,n))
