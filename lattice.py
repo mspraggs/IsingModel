@@ -21,7 +21,7 @@ class Lattice:
 
     def config(self):
         """Outputs information about the lattice configuration"""
-        return "n=%d,state=%f,J=%f,T=%f" % (n,state,J,T)
+        return "n=%d,state=%f,J=%f,T=%f" % (self.n,self.state,self.J,self.T)
 
     def Hij(self,(i,j)):
         """Calculates the energy of a given lattice site"""
