@@ -4,4 +4,6 @@ import pylab as pl
 
 class Lattice:
 
-    
+    def __init__(self):
+        """Constructor..."""
+        
