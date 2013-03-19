@@ -66,4 +66,5 @@ class Lattice:
         Ediff = newLattice.H() - self.H()
         AP = self.probaccept(Ediff)
 
-        
+        if AP > pl.random():
+            self.spins = copy.copy(newLattice.spins)
