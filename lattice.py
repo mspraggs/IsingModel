@@ -21,7 +21,10 @@ class Lattice:
 
     def Hij(self,(i,j)):
         """Calculates the energy of a given lattice site"""
-        neighbour_sum = self.spins[i,j-1] + self.spins[i,j+1] + self.spins[i-1,j] + self.spins[i+1,j]
+        neighbour_sum = self.spins[i%(self.n-1),(j-1)%(self.n-1)] + \
+                        self.spins[i%(self.n-1),(j+1)%(self.n-1)] + \
+                        self.spins[(i-1)%(self.n-1),j%(self.n-1)] + \
+                        self.spins[(i+1)%(self.n-1),j%(self.n-1)]
         return - self.J * self.spins[i,j] * neighbour_sum
 
     def H(self):
@@ -29,7 +32,7 @@ class Lattice:
         E = 0
 
         for i in xrange(0,self.n,2):
-            for j in xrange(0,self.n,2):
+            for j in xrange(1,self.n,2):
                 E += self.Hij((i,j))
 
         return E
