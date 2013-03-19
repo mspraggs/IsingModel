@@ -31,11 +31,11 @@ class Lattice:
         """Calculates the total energy of the lattice"""
         E = 0
 
-        for i in xrange(0,self.n,2):
-            for j in xrange(1,self.n,2):
+        for i in xrange(self.n):
+            for j in xrange(self.n):
                 E += self.Hij((i,j))
 
-        return E
+        return E/2
 
     def beta(self):
         """Calculates the value of beta for the given lattice temperature"""
@@ -71,3 +71,7 @@ class Lattice:
 
         if AP > pl.random():
             self.spins = copy.copy(newLattice.spins)
+
+    def spinaverage(self):
+        """Calculate the average spin of the lattice"""
+        return pl.mean(self.spins)
