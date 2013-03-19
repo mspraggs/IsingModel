@@ -11,7 +11,7 @@ for T in Temps:
         L.step()
         averages.append(L.spinaverage())
 
-    fileio.writedata("Temperature="+str(T)+".txt",averages)
+    fileio.writedata("results/Temperature="+str(T)+".txt",averages)
     os.system("git add *.txt")
     os.system("git commit -am 'Added results for T="+T+"'")
     os.system("git push origin master")
