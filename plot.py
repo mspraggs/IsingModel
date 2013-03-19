@@ -5,8 +5,10 @@ from os.path import isfile, join
 
 files = [f for f in listdir("results") if isfile(join("results",f)) and f[-4:] == ".txt"]
 
+pl.ion()
+
 for f in files:
-    parameters = parsefilename(f)
+    parameters = fileio.parsefilename(f)
     #This is where results could be filtered according to parameters if necessary
     if True:
         averages = fileio.readdata(f)
@@ -14,3 +16,5 @@ for f in files:
         label = "T=%f" % parameters[3]
         pl.plot(iterations,averages,label=label)
         
+pl.legend()
+pl.show()
