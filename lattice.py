@@ -43,6 +43,9 @@ class Lattice:
 
         return (pl.randint(0,self.n),pl.randint(0,self.n))
 
-    def spinflip
+    def spinflip(self,(i,j)):
+        """Flips the spin at site i,j"
+        self.spins[i,j] = 1 if self.spins[i,j] == -1 else 1
+        
 
     
