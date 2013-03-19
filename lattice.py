@@ -19,6 +19,10 @@ class Lattice:
                 if pl.random() < (1 + state) / 2.:
                     self.spins[i,j] = 1
 
+    def config(self):
+        """Outputs information about the lattice configuration"""
+        return "n=%d,state=%f,J=%f,T=%f" % (n,state,J,T)
+
     def Hij(self,(i,j)):
         """Calculates the energy of a given lattice site"""
         neighbour_sum = self.spins[i%(self.n-1),(j-1)%(self.n-1)] + \
