@@ -45,7 +45,7 @@ class Lattice:
 
     def spinflip(self,(i,j)):
         """Flips the spin at site i,j"""
-        self.spins[i,j] = 1 if self.spins[i,j] == -1 else 1
+        self.spins[i,j] = 1 if self.spins[i,j] == -1 else -1
 
     def probaccept(self,Ediff):
         """Calculates the probability of acceptance of a configuration that
