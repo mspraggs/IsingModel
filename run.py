@@ -2,12 +2,16 @@ import lattice
 import fileio
 import os
 
-Temps = [0.5*x for x in range(10)]
+Ts = [0.25*x for x in range(100)]
+ns = [100]
+states = [0]
+Js = [1]
+params = [(n,T,state,J) for n in ns for T in Ts for state in states for J in Js]
 
-for T in Temps:
-    L = lattice.Lattice(n = 100,T=T,state=0)
+for param in params:
+    L = lattice.Lattice(n = param[0],T=param[1],state=param[2],J=param[3])
     averages = []
-    for i in xrange(1000):
+    for i in xrange(10000):
         print("Temperature: %f Step: %d" % (T,i))
         L.step()
         averages.append(L.spinaverage())
