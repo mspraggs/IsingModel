@@ -66,7 +66,7 @@ class Lattice:
         #Now need to work out the energy difference between the lattices.
         #This is used to determine the probability that we'll keep the
         #new configuration.
-        Ediff = newLattice.H() - self.H()
+        Ediff = newLattice.Hij(site) - self.Hij(site)
         AP = self.probaccept(Ediff)
 
         if AP > pl.random():
