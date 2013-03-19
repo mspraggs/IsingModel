@@ -15,7 +15,7 @@ class Lattice:
                 if pl.random() > (1 + state) / 2:
                     self.spins[i,j] = 1
 
-    def Hij(self,i,j):
+    def Hij(self,(i,j)):
         """Calculates the energy of a given lattice site"""
         neighbour_sum = self.spins[i,j-1] + self.spins[i,j+1] + self.spins[i-1,j] + self.spins[i+1,j]
         return - self.J * self.spins[i,j] * neighbour_sum
@@ -27,6 +27,14 @@ class Lattice:
 
         for i in xrange(0,self.n,2):
             for j in xrange(0,self.n,2):
-                E += self.Hij(i,j)
+                E += self.Hij((i,j))
 
         return E
+
+    def get_site(self):
+        """Returns tuple to random point on the lattice
+        (Selection probability)"""
+
+        return (pl.randint(0,self.n),pl.randint(0,self.n))
+
+    
