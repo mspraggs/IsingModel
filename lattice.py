@@ -13,6 +13,7 @@ class Lattice:
         self.spins = -1 * pl.ones((n,n))
         self.J = J
         self.T=T
+        self.init = state
 
         for i in xrange(n):
             for j in xrange(n):
@@ -21,7 +22,7 @@ class Lattice:
 
     def config(self):
         """Outputs information about the lattice configuration"""
-        return "n=%d,state=%f,J=%f,T=%f" % (self.n,self.state,self.J,self.T)
+        return "n=%d,init=%f,J=%f,T=%f" % (self.n,self.init,self.J,self.T)
 
     def Hij(self,(i,j)):
         """Calculates the energy of a given lattice site"""
