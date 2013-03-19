@@ -6,4 +6,4 @@ class Lattice:
 
     def __init__(self):
         """Constructor..."""
-        
+        spins = 
