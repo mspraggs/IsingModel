@@ -17,7 +17,7 @@ def readdata(filename):
     return [eval(line[:-1]) for line in lines]
 
 def parsefilename(filename):
-    """Parses file names to extract variables"
+    """Parses file names to extract variables"""
     parameters = filename[:-4].split(",")
     filterchars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_="
     return [eval(parameter.strip(filterchars)) for parameter in parameters]
