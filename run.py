@@ -12,7 +12,7 @@ for param in params:
     L = lattice.Lattice(n = param[0],T=param[1],state=param[2],J=param[3])
     averages = []
     for i in xrange(10000):
-        print("Temperature: %f Step: %d" % (T,i))
+        print("Run:%s Step: %d" % (L.config(),i))
         L.step()
         averages.append(L.spinaverage())
 
