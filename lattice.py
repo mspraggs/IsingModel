@@ -58,8 +58,8 @@ class Lattice:
     def probaccept(self,Ediff):
         """Calculates the probability of acceptance of a configuration that
         has energy difference Ediff from current configuration"""
-        if self.T == 0: return 0
-        else: return 1 if Ediff < 0 else pl.exp(-self.beta()*Ediff)
+        if Ediff < 0: return 1
+        else: return 0 if self.T == 0 else pl.exp(-self.beta()*Ediff)
         
     def step(self):
         """Run one step of the Metropolis algorithm"""

@@ -24,3 +24,11 @@ def parsefilename(filename):
     filterchars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_="
     return [eval(parameter.strip(filterchars)) for parameter in parameters]
 
+def checkparameters(prange,parameters):
+    """Checks to see if parameters are in range, and returns True if so."""
+    result = True
+    for i in xrange(len(parameters)):
+        if parameters[i] not in prange[i]:
+            result = False
+
+    return result
