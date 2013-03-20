@@ -29,7 +29,6 @@ for param in params:
         Ediff,Sdiff = L.step()
         Etotal += Ediff
         Stotal += Sdiff
-        print(Ediff,Sdiff)
         Etotals.append(Etotal)
         Stotals.append(Stotal)
 
