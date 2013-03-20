@@ -1,3 +1,4 @@
+import numpy as np
 
 def writedata(filename,Es,Ss):
     """Writes list of results to a file"""
@@ -30,7 +31,7 @@ def checkparameters(prange,parameters):
     """Checks to see if parameters are in range, and returns True if so."""
     result = True
     for i in xrange(len(parameters)):
-        if parameters[i] not in prange[i]:
+        if np.round(parameters[i],3) not in prange[i]:
             result = False
 
     return result
