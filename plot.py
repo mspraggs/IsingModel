@@ -12,7 +12,7 @@ pl.ion()
 for f in files:
     parameters = fileio.parsefilename(f)
     Ts = [0.25]#[0,0.25,0.5,0.75]
-    ns = [100,200,300]
+    ns = [100]
     Js = [1]
     inits = [0]
     #This is where results could be filtered according to parameters if necessary
