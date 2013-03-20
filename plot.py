@@ -11,12 +11,12 @@ pl.ion()
 
 for f in files:
     parameters = fileio.parsefilename(f)
-    Ts = [0]#[0,0.25,0.5,0.75]
+    Ts = [0.25*x for x in range(21)]
     ns = [100]
     Js = [1]
-    inits = [0]
+    states = [0]
     #This is where results could be filtered according to parameters if necessary
-    if fileio.checkparameters([ns,inits,Js,Ts],parameters):
+    if fileio.checkparameters([ns,states,Js,Ts],parameters):
         averages = fileio.readdata(join("results",f))
         iterations = range(len(averages))
         label = "n=%f" % parameters[0]
