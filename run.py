@@ -11,7 +11,7 @@ params = [(n,state,J,T) for n in ns for T in Ts for state in states for J in Js]
 for param in params:
     L = lattice.Lattice(n = param[0],T=param[3],state=param[1],J=param[2])
     averages = []
-    for i in xrange(10000):
+    for i in xrange(10000000):
         print("Run:%s Step: %d" % (L.config(),i))
         L.step()
         averages.append(L.spinaverage())
