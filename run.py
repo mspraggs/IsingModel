@@ -16,7 +16,6 @@ for param in params:
     Saverage.append(L.spinaverage())
     for i in xrange(10000):
         print("Run:%s Equilibrating: %d" % (L.config(),i))
-        print(L.step())
 
     Etotals = []
     Stotals = []
