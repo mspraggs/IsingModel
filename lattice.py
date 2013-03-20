@@ -7,7 +7,7 @@ class Lattice:
 
     k = 1#.38e-23
 
-    def __init__(self,n=100,state=0.5,J=1,T=2):
+    def __init__(self,n=100,state=0.5,J=1,T=2,):
         """Constructor..."""
         self.n = n
         self.spins = -1 * pl.ones((n,n))
@@ -72,10 +72,13 @@ class Lattice:
         #This is used to determine the probability that we'll keep the
         #new configuration.
         Ediff = newLattice.Hij(site) - self.Hij(site)
+        Sdiff = newLattice.spins[site] - self.spins[site]
         AP = self.probaccept(Ediff)
 
         if AP > pl.random():
             self.spins = copy.copy(newLattice.spins)
+
+        return (Ediff, Sdiff)
 
     def spinaverage(self):
         """Calculate the average spin of the lattice"""
