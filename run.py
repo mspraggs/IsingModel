@@ -10,13 +10,26 @@ params = [(n,state,J,T) for n in ns for state in states for J in Js for T in Ts 
 
 for param in params:
     L = lattice.Lattice(n = param[0],T=param[3],state=param[1],J=param[2])
-    averages = []
     for i in xrange(10000000):
-        print("Run:%s Step: %d" % (L.config(),i))
+        print("Run:%s Equilibrating: %d" % (L.config(),i))
         L.step()
-        averages.append(L.spinaverage())
 
-    fileio.writedata("results/%s.txt" % L.config(),averages)
+    Etotals = []
+    Stotals = []
+    Etotal = L.H()
+    Stotal = L.spintotal()
+    Etotals.append(Etotal)
+    Stotal.append(Stotal)
+    
+    for i in xrange(10000):
+        print("Run:%s Calculating: %d" % (L.config(),i))
+        Ediff,Sdiff = L.step()
+        Etotal += Ediff
+        Stotal += Sdiff
+        Etotals.append(Etotal)
+        Stotals.append(Stotal)
+
+    fileio.writedata("results/%s.txt" % L.config(),Etotals,Stotals)
     os.system("git add *.txt")
     os.system("git commit -am 'Added results for %s'" % L.config())
     os.system("git push origin master")
