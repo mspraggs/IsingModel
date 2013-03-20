@@ -77,7 +77,10 @@ class Lattice:
 
         if AP > pl.random():
             self.spins = copy.copy(newLattice.spins)
-
+        else:
+            Ediff = 0.
+            Sdiff = 0.
+            
         return (Ediff, Sdiff)
 
     def spinaverage(self):
