@@ -18,7 +18,7 @@ def readdata(filename):
 
     Es = [eval(line.split(",")[0]) for line in lines]
     Ss = [eval(line.split(",")[1][:-1]) for line in lines]
-    return (Ediffs,Sdiffs)
+    return (Es,Ss)
 
 def parsefilename(filename):
     """Parses file names to extract variables"""
