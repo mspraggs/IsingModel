@@ -11,6 +11,7 @@ pl.ion()
 
 chi = []
 Cv = []
+Ts = []
 
 for f in files:
     n,state,J,T = fileio.parsefilename(f)
@@ -26,6 +27,6 @@ for f in files:
 
         chi.append(1/T*(pl.mean(Saverages**2) - pl.mean(Saverages)**2))
         Cv.append(1/T**2*(pl.mean(Eaverages**2) - pl.mean(Saverages)**2))
-        
-pl.legend()
+
+pl.plot(Ts,chi)
 pl.show()
