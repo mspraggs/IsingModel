@@ -13,7 +13,7 @@ Saverage = []
 for param in params:
     L = lattice.Lattice(n = param[0],T=param[3],state=param[1],J=param[2])
     Saverage.append(L.spinaverage())
-    for i in xrange(10000):
+    for i in xrange(100000):
         print("Run:%s Equilibrating: %d" % (L.config(),i))
         L.step()
         Saverage.append(L.spinaverage())
