@@ -6,7 +6,7 @@ Ts = [0.25*x for x in range(21)]
 ns = [100]
 states = [0.5*x - 1 for x in range(5)]
 Js = [1.]
-params = [(n,state,J,T) for n in nsfor state in states for J in Js for T in Ts ]
+params = [(n,state,J,T) for n in ns for state in states for J in Js for T in Ts ]
 
 for param in params:
     L = lattice.Lattice(n = param[0],T=param[3],state=param[1],J=param[2])
