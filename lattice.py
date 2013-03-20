@@ -83,3 +83,7 @@ class Lattice:
     def spinaverage(self):
         """Calculate the average spin of the lattice"""
         return pl.mean(self.spins)
+
+    def spintotal(self):
+        """Calculate the total spin of the lattice"""
+        return pl.sum(self.spins)
