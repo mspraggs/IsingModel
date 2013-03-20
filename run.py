@@ -10,7 +10,7 @@ params = [(n,state,J,T) for n in ns for state in states for J in Js for T in Ts 
 
 for param in params:
     L = lattice.Lattice(n = param[0],T=param[3],state=param[1],J=param[2])
-    for i in xrange(10000000):
+    for i in xrange(100):
         print("Run:%s Equilibrating: %d" % (L.config(),i))
         L.step()
 
@@ -19,9 +19,9 @@ for param in params:
     Etotal = L.H()
     Stotal = L.spintotal()
     Etotals.append(Etotal)
-    Stotal.append(Stotal)
+    Stotals.append(Stotal)
     
-    for i in xrange(10000):
+    for i in xrange(1000):
         print("Run:%s Calculating: %d" % (L.config(),i))
         Ediff,Sdiff = L.step()
         Etotal += Ediff
