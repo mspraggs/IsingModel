@@ -59,7 +59,7 @@ class Lattice:
         """Calculates the probability of acceptance of a configuration that
         has energy difference Ediff from current configuration"""
         if Ediff < 0: return 1
-        else return 0 if self.T == 0 else pl.exp(-self.beta()*Ediff)
+        else: return 0 if self.T == 0 else pl.exp(-self.beta()*Ediff)
         
     def step(self):
         """Run one step of the Metropolis algorithm"""
