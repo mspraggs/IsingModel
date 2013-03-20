@@ -2,7 +2,7 @@ import lattice
 import fileio
 import os
 
-Ts = [0.25*x for x in xrange(41)]
+Ts = [0.01] + [0.25*x for x in xrange(1,41)]
 ns = [100]
 states = [0]
 Js = [1.]
