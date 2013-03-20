@@ -4,7 +4,7 @@ import os
 
 Ts = [0.25*x for x in range(21)]
 ns = [100]
-states = [0.5*x - 1 for x in range(5)]
+states = [0]#[0.5*x - 1 for x in range(5)]
 Js = [1.]
 params = [(n,state,J,T) for n in ns for state in states for J in Js for T in Ts ]
 
