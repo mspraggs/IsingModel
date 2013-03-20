@@ -1,10 +1,10 @@
 
-def writedata(filename,data):
+def writedata(filename,Ediffs,Sdiffs):
     """Writes list of results to a file"""
     f = open(filename,'w')
 
-    for datum in data:
-        f.write(str(datum) + '\n')
+    for i in xrange(len(Ediffs)):
+        f.write("%f,%f\n" % (Ediffs[i],Sdiffs[i]))
 
     f.close()
 
@@ -16,7 +16,9 @@ def readdata(filename):
 
     f.close()
 
-    return [eval(line[:-1]) for line in lines]
+    Ediffs = [eval(line.split(",")[0]) for line in lines]
+    Sdiffs = [eval(line.split(",")[1][:-1]) for line in lines]
+    return (Ediffs,Sdiffs
 
 def parsefilename(filename):
     """Parses file names to extract variables"""
