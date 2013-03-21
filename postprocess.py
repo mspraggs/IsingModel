@@ -3,11 +3,14 @@ import IPython
 import fileio
 from os import listdir,system
 from os.path import isfile, join
+import sys
 import datetime
 
 files = [f for f in listdir("results") if isfile(join("results",f)) and f[-4:] == ".txt"]
 
 files.sort()
+
+sys.stdout = open("../batch.log","w")
 
 pl.ion()
 
