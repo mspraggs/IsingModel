@@ -35,13 +35,19 @@ def parsefilename(filename):
     """Parses file names to extract variables"""
     parameters = filename[:-4].split(",")
     filterchars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_="
-    return [eval(parameter.strip(filterchars)) for parameter in parameters]
+    try:
+        return [eval(parameter.strip(filterchars)) for parameter in parameters]
+    except SyntaxError:
+        return []
 
 def checkparameters(prange,parameters):
     """Checks to see if parameters are in range, and returns True if so."""
-    result = True
-    for i in xrange(len(parameters)):
-        if np.round(parameters[i],3) not in prange[i]:
-            result = False
+    if len(parameters) == 0:
+        return False
+    else:
+        result = True
+        for i in xrange(len(parameters)):
+            if np.round(parameters[i],3) not in prange[i]:
+                result = False
 
-    return result
+        return result
