@@ -3,6 +3,7 @@ import IPython
 import fileio
 from os import listdir
 from os.path import isfile, join
+import datetime
 
 files = [f for f in listdir("results") if isfile(join("results",f)) and f[-4:] == ".txt"]
 
@@ -40,4 +41,6 @@ Tc = 2*float(J1)/pl.log(1.+pl.sqrt(2.))
 Stheory = [(1 - (pl.sinh(pl.log(1+pl.sqrt(2.))*Tc/T))**(-4))**(1./8) for T in Ts if T < Tc]
 Stheory += [0 for T in Ts if T >= Tc]
 
-fileio.writedata(join("results","results.txt"),[Ts,Emean,Smean,Stheory,Cv,chi])
+time = datetime.datetime.now()
+
+fileio.writedata(join("results","results_%s.txt" % time.strftime("%H:%M:%S_%d-%m-%Y")),[Ts,Emean,Smean,Stheory,Cv,chi])
