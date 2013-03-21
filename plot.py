@@ -1,4 +1,5 @@
 import pylab as pl
+
 import fileio
 from os import listdir
 from os.path import isfile, join
@@ -11,12 +12,14 @@ pl.ion()
 
 chi = []
 Cv = []
+Smean = []
+Emean = []
 Ts = []
 
 for f in files:
     n,state,J,T = fileio.parsefilename(f)
-    Ts = [0.01*(x+1) for x in xrange(0,30)]
-    ns = [50]
+    Ts = [pl.around(0.01*(x+1),3) for x in xrange(0,500)]
+    ns = [20]
     Js = [1]
     states = [1]
     #This is where results could be filtered according to parameters if necessary
@@ -27,6 +30,7 @@ for f in files:
 
         chi.append(1/T*pl.var(Saverages))
         Cv.append(1/T**2*pl.var(Eaverages))
+        Smean.append(pl.absolute(pl.mean(Saverages)))
 
-pl.plot(Ts,Cv)
+pl.plot(Ts,Smean,'x')
 pl.show()
