@@ -14,7 +14,7 @@ Saverage = []
 for param in params:
     L = lattice.Lattice(n = param[0],T=param[3],state=param[1],J=param[2])
     Saverage.append(L.spinaverage())
-    for i in xrange(100000):
+    for i in xrange(500000):
         print("Run:%s Equilibrating: %d" % (L.config(),i))
 
     Etotals = []
@@ -24,7 +24,7 @@ for param in params:
     Etotals.append(Etotal)
     Stotals.append(Stotal)
     
-    for i in xrange(50000):
+    for i in xrange(250000):
         print("Run:%s Calculating: %d" % (L.config(),i))
         Ediff,Sdiff = L.step()
         Etotal += Ediff
