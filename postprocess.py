@@ -27,6 +27,7 @@ for f in files:
     states = [1]
     #This is where results could be filtered according to parameters if necessary
     if fileio.checkparameters([ns,states,Js,Ts],[n,state,J,T]):
+        print("Current file: %s" % f)
         Etotals,Stotals = fileio.readdata(join("results",f))
         Eaverages = pl.array(Etotals) / n**2
         Saverages = pl.array(Stotals) / n**2
