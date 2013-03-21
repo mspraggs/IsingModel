@@ -1,5 +1,5 @@
 import pylab as pl
-
+import IPython
 import fileio
 from os import listdir
 from os.path import isfile, join
@@ -15,10 +15,12 @@ Cv = []
 Smean = []
 Emean = []
 Ts = []
+J1 = 0
 
 for f in files:
     n,state,J,T = fileio.parsefilename(f)
-    Ts = [pl.around(0.01*(x+1),3) for x in xrange(0,500)]
+    J1 = J
+    Ts = [pl.around(0.01*(x+1),3) for x in range(0,500)]
     ns = [20]
     Js = [1]
     states = [1]
@@ -32,5 +34,9 @@ for f in files:
         Cv.append(1/T**2*pl.var(Eaverages))
         Smean.append(pl.absolute(pl.mean(Saverages)))
 
-pl.plot(Ts,Smean,'x')
-pl.show()
+Tc = 2*float(J1)/pl.log(1.+pl.sqrt(2.))
+
+Stheory = [(1 - (pl.sinh(pl.log(1+pl.sqrt(2.))*Tc/T))**(-4))**(1./8) for T in Ts if T < Tc]
+Stheory += [0 for T in Ts if T >= Tc]
+
+IPython.embed()
