@@ -4,7 +4,7 @@ import os
 import pylab as pl
 
 Ts = [0.01*(x+1) for x in xrange(0,500)]
-ns = [50]
+ns = [20]
 states = [1]
 Js = [1.]
 params = [(n,state,J,T) for n in ns for state in states for J in Js for T in Ts ]
