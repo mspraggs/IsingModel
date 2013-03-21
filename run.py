@@ -3,7 +3,7 @@ import fileio
 import os
 import pylab as pl
 
-Ts = [5.]#[0.01*(x+1) for x in xrange(0,500)]
+Ts = [0.01*(x+1) for x in xrange(0,500)]
 ns = [20]
 states = [1]
 Js = [1.]
