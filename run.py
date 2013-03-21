@@ -32,7 +32,7 @@ for param in params:
         Etotals.append(Etotal)
         Stotals.append(Stotal)
 
-    fileio.writedata("results/%s.txt" % L.config(),Etotals,Stotals)
+    fileio.writedata("results/%s.txt" % L.config(),[Etotals,Stotals])
     os.system("git add *.txt")
     os.system("git commit -am 'Added results for %s'" % L.config())
     os.system("git push origin master")
