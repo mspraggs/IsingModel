@@ -1,4 +1,4 @@
-import pylab as pl
+import pylab
 import IPython
 import fileio
 from os import listdir
