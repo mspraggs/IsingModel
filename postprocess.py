@@ -1,7 +1,7 @@
 import pylab as pl
 import IPython
 import fileio
-from os import listdir
+from os import listdir,system
 from os.path import isfile, join
 import datetime
 
@@ -42,5 +42,9 @@ Stheory = [(1 - (pl.sinh(pl.log(1+pl.sqrt(2.))*Tc/T))**(-4))**(1./8) for T in Ts
 Stheory += [0 for T in Ts if T >= Tc]
 
 time = datetime.datetime.now()
+filename = join("results","results_%s.txt" % time.strftime("%H:%M:%S_%d-%m-%Y"))
 
-fileio.writedata(join("results","results_%s.txt" % time.strftime("%H:%M:%S_%d-%m-%Y")),[Ts,Emean,Smean,Stheory,Cv,chi])
+fileio.writedata(filename,[Ts,Emean,Smean,Stheory,Cv,chi])
+
+system("git add %s" % filename)
+system("git commit %s -m 'Added results'" % filename)
