@@ -26,21 +26,45 @@ class Lattice:
 
     def Hij(self,(i,j)):
         """Calculates the energy of a given lattice site"""
-        neighbour_sum = self.spins[i%(self.n-1),(j-1)%(self.n-1)] + \
-                        self.spins[i%(self.n-1),(j+1)%(self.n-1)] + \
-                        self.spins[(i-1)%(self.n-1),j%(self.n-1)] + \
-                        self.spins[(i+1)%(self.n-1),j%(self.n-1)]
+        neighbour_sum = 0
+        for site in self.getneighbours((i,j)):
+            neighbour_sum += self.spins[site]
         return - self.J * self.spins[i,j] * neighbour_sum
 
-    def H(self):
+    def getneighbours(self,(i,j)):
+        """Returns sites connected to site i,j"""
+        result = []
+        result.append((i%self.n,(j-1)%self.n))
+        result.append((i%self.n,(j+1)%self.n))
+        result.append(((i-1)%self.n,j%self.n))
+        result.append(((i+1)%self.n,j%self.n))
+        return result
+
+    def getneighbourhood(self,(i,j)):
+        """Gets 3x3 neighbourhood around site i,j"""
+        out = pl.zeros((3,3))
+        r = 0
+        for m in xrange(i-1,i+2):
+            s = 0
+            for n in xrange(j-1,j+2):
+                out[r,s] = self.spins[m%(self.n-1),n%(self.n-1)]
+                s+=1
+            r+=1
+                
+        return out
+
+    def H(self, a = False):
         """Calculates the total energy of the lattice"""
-        E = 0
+        E = 0.
+        Energies = pl.zeros((self.n,self.n))
 
         for i in xrange(self.n):
             for j in xrange(self.n):
                 E += self.Hij((i,j))
+                Energies[i,j] = self.Hij((i,j))
 
-        return E/2
+        if a: return [E/2,Energies]
+        else: return E/2
 
     def beta(self):
         """Calculates the value of beta for the given lattice temperature"""
@@ -71,8 +95,8 @@ class Lattice:
         #Now need to work out the energy difference between the lattices.
         #This is used to determine the probability that we'll keep the
         #new configuration.
-        Ediff = newLattice.Hij(site) - self.Hij(site)
-        Sdiff = newLattice.spins[site] - self.spins[site]
+        Ediff = -2 * self.Hij(site)
+        Sdiff = -2 * self.spins[site]
         AP = self.probaccept(Ediff)
 
         if AP > pl.random():
