@@ -4,6 +4,21 @@ import fileio
 from os import listdir
 from os.path import isfile, join
 
+def subplots(label):
+    """Draws four subplots of each of the variables"""
+    data = [M,E,chi,Cv]
+    labels = ["$\overline{M}$","$\overline{E}$","$\overline{\chi}$","$\overline{C}_V$"]
+
+    for j in xrange(len(labels)):
+        subplot(2,2,j+1)
+        plot(T,data[j])
+        xlabel("$T$")
+        ylabel(labels[j])
+
+    fig = gcf()
+    fig.suptitle(label)
+    savefig("plots/%s.png" % files[i])
+
 files = [f for f in listdir("results") if isfile(join("results",f)) and f[:7] == "results"]
 
 files.sort()
