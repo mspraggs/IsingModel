@@ -33,8 +33,8 @@ for f in files:
         Eaverages = pl.array(Etotals) / n**2
         Saverages = pl.array(Stotals) / n**2
         
-        chi.append(1/T*pl.var(Stotal)/n**2)
-        Cv.append(1/T**2*pl.var(Etotal)/n**2)
+        chi.append(1/T*pl.var(Stotals)/n**2)
+        Cv.append(1/T**2*pl.var(Etotals)/n**2)
         Smean.append(pl.absolute(pl.mean(Saverages)))
         Emean.append(pl.mean(Eaverages))        
 
