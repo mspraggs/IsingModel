@@ -15,7 +15,7 @@ if len(files) > 0:
         print("(%d) %s" % (i,files[i]))
 
     file_num = input("File: ")
-    filename = "results/%s" % files[i]
+    filename = "results/%s" % files[file_num]
 
     T,E,M,Mtheory,Cv,chi = fileio.readdata(filename)
     
