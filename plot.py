@@ -1,11 +1,13 @@
-import pylab
+from pylab import *
 import IPython
 import fileio
 from os import listdir
 from os.path import isfile, join
 
 files = [f for f in listdir("results") if isfile(join("results",f)) and f[:7] == "results"]
-IPython.embed()
+
+files.sort()
+ion()
 
 if len(files) > 0:
     print("Available data:")
