@@ -1,16 +1,13 @@
 import pylab as pl
-import IPython
 import fileio
 from os import listdir,system
 from os.path import isfile, join
 import sys
 import datetime
 
-files = [f for f in listdir("results") if isfile(join("results",f)) and f[-4:] == ".txt"]
+files = [f for f in listdir("results") if isfile(join("results",f)) and f[-4:] == ".txt" and f[:2] == "n="]
 
 files.sort()
-
-pl.ion()
 
 chi = []
 Cv = []
@@ -33,11 +30,11 @@ for f in files:
         Etotals,Stotals = fileio.readdata(join("results",f))
         Eaverages = pl.array(Etotals) / n**2
         Saverages = pl.array(Stotals) / n**2
-
+        
         chi.append(1/T*pl.var(Saverages))
         Cv.append(1/T**2*pl.var(Eaverages))
         Smean.append(pl.absolute(pl.mean(Saverages)))
-        Emean.append(pl.mean(Eaverages))
+        Emean.append(pl.mean(Eaverages))        
 
 Tc = 2*float(J1)/pl.log(1.+pl.sqrt(2.))
 
@@ -51,3 +48,4 @@ fileio.writedata(filename,[Ts,Emean,Smean,Stheory,Cv,chi])
 
 system("git add %s" % filename)
 system("git commit %s -m 'Added results'" % filename)
+system("git push origin master")
