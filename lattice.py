@@ -1,28 +1,25 @@
 """Class for lattice object. Contains spin states etc."""
 
 import pylab as pl
-import copy
+import scipy.weave as weave
 
 class Lattice:
 
     k = 1#.38e-23
 
-    def __init__(self,n=100,state=0.5,J=1,T=2,):
+    def __init__(self,n=100,state=0.5,J=1.,T=2.,):
         """Constructor..."""
         self.n = n
         self.spins = -1 * pl.ones((n,n))
         self.J = J
         self.T=T
         self.init = state
+        self.config = "n=%d,init=%f,J=%f,T=%f" % (self.n,self.init,self.J,self.T)
 
         for i in xrange(n):
             for j in xrange(n):
                 if pl.random() < (1 + state) / 2.:
                     self.spins[i,j] = 1
-
-    def config(self):
-        """Outputs information about the lattice configuration"""
-        return "n=%d,init=%f,J=%f,T=%f" % (self.n,self.init,self.J,self.T)
 
     def Hij(self,(i,j)):
         """Calculates the energy of a given lattice site"""
@@ -33,11 +30,10 @@ class Lattice:
 
     def getneighbours(self,(i,j)):
         """Returns sites connected to site i,j"""
-        result = []
-        result.append((i%self.n,(j-1)%self.n))
-        result.append((i%self.n,(j+1)%self.n))
-        result.append(((i-1)%self.n,j%self.n))
-        result.append(((i+1)%self.n,j%self.n))
+        result = [(i%self.n,(j-1)%self.n),
+                  (i%self.n,(j+1)%self.n),
+                  ((i-1)%self.n,j%self.n),
+                  ((i+1)%self.n,j%self.n)]
         return result
 
     def getneighbourhood(self,(i,j)):
@@ -88,25 +84,65 @@ class Lattice:
     def step(self):
         """Run one step of the Metropolis algorithm"""
         site = self.getsite()
-        #Copy the lattice and flip a particular site
-        newLattice = copy.deepcopy(self)
-        newLattice.spinflip(site)
         
         #Now need to work out the energy difference between the lattices.
         #This is used to determine the probability that we'll keep the
         #new configuration.
         Ediff = -2 * self.Hij(site)
         Sdiff = -2 * self.spins[site]
-        AP = self.probaccept(Ediff)
 
-        if AP > pl.random():
-            self.spins = copy.copy(newLattice.spins)
+        if self.probaccept(Ediff) > pl.random():
+            self.spinflip(site)
+            return (Ediff, Sdiff)
         else:
-            Ediff = 0.
-            Sdiff = 0.
-            
-        return (Ediff, Sdiff)
+            return (0.,0.)
 
+    def cstep(self):
+        """Run one step of the Metropolis algorithm using weave"""
+        i,j = (pl.randint(0,self.n),pl.randint(0,self.n))
+
+        spins = self.spins
+        n = self.n
+        J = self.J
+        T = self.T
+        
+        code = """
+        #include <math.h>
+        double neighbour_sum = 0;
+        neighbour_sum += spins(i%n,(j-1)%n);
+        neighbour_sum += spins(i%n,(j+1)%n);
+        neighbour_sum += spins((i-1)%n,j%n);
+        neighbour_sum += spins((i+1)%n,j%n);
+
+        double Ediff = -2 * J * spins(i,j) * neighbour_sum;
+        double Sdiff = -2 * spins(i,j);
+
+        double PA = 1.;
+        if(Ediff > 0) {
+        if(T == 0) {
+        PA = 0.;
+        }
+        else {
+        PA = exp(-1/T*Ediff);
+        }
+        }
+
+        py::tuple results(3);
+
+        results[0] = PA;
+        results[1] = Ediff;
+        results[2] = Sdiff;
+        return_val = results;
+        """
+
+        PA,Ediff,Sdiff = weave.inline(code, ['i','j','spins','J','T','n'], type_converters=weave.converters.blitz)
+
+        if PA > pl.random():
+            self.spinflip((i,j))
+            return Ediff,Sdiff
+        else:
+            return (0.,0.)
+    
     def spinaverage(self):
         """Calculate the average spin of the lattice"""
         return pl.mean(self.spins)
@@ -114,3 +150,17 @@ class Lattice:
     def spintotal(self):
         """Calculate the total spin of the lattice"""
         return pl.sum(self.spins)
+
+
+if __name__ == "__main__":
+    import time
+
+    t1 = time.time()
+
+    L = Lattice()
+    for i in xrange(100000):
+        L.cstep()
+
+    t2 = time.time()
+
+    print(t2 - t1)
