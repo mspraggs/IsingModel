@@ -99,7 +99,7 @@ class Lattice:
 
     def cstep(self):
         """Run one step of the Metropolis algorithm using weave"""
-        #i,j = (pl.randint(0,self.n),pl.randint(0,self.n))
+        i,j = (pl.randint(0,self.n),pl.randint(0,self.n))
 
         spins = self.spins
         n = self.n
@@ -108,16 +108,11 @@ class Lattice:
         
         code = """
         #include <math.h>
-        #include <stdlib.h>
-        #include <time.h>
-        srand(time(0));
-        int i = rand() % n;
-        int j = rand() % n;
         
         double neighbour_sum = 0;
-        neighbour_sum += spins(i%n,(j-1)%n);
+        neighbour_sum += spins(i%n,(j-1+n)%n);
         neighbour_sum += spins(i%n,(j+1)%n);
-        neighbour_sum += spins((i-1)%n,j%n);
+        neighbour_sum += spins((i-1+n)%n,j%n);
         neighbour_sum += spins((i+1)%n,j%n);
 
         double Ediff = 2 * J * spins(i,j) * neighbour_sum;
@@ -132,30 +127,21 @@ class Lattice:
         PA = exp(-1/T*Ediff);
         }
         }
-        
-        bool flip = false;
 
-        if (PA > (float)rand()/(float)RAND_MAX) {
-        flip = true;
-        }
-        else {
-        Ediff = 0;
-        Sdiff = 0;
-        }
-
-        py::tuple results(5);
-        results[0] = flip;
+        py::tuple results(3);
+        results[0] = PA;
         results[1] = Ediff;
         results[2] = Sdiff;
-        results[3] = i;
-        results[4] = j;
         return_val = results;
         """
 
-        flip,Ediff,Sdiff,i,j = weave.inline(code, ['spins','J','T','n'], type_converters=weave.converters.blitz)
-
-        if flip: self.spinflip((i,j))
-        return Ediff,Sdiff
+        PA,Ediff,Sdiff = weave.inline(code, ['spins','J','T','n','i','j'], type_converters=weave.converters.blitz)
+        
+        if PA > pl.random():
+                self.spinflip((i,j))
+                return Ediff,Sdiff
+        else:
+                return 0.,0.
             
     def spinaverage(self):
         """Calculate the average spin of the lattice"""
