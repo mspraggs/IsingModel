@@ -6,7 +6,7 @@ def runparams(param,n_equil=500000,n_calc=250000):
     L = lattice.Lattice(n = param[0],T=param[3],state=param[1],J=param[2])
     print("Run:%s Equilibrating..." % L.config)
     for i in xrange(n_equil):
-        L.cstep()
+        L.step()
     print("Done!")
 
     Etotals = []
@@ -18,7 +18,7 @@ def runparams(param,n_equil=500000,n_calc=250000):
 
     print("Run:%s Calculating..." % L.config)
     for i in xrange(n_calc):
-        Ediff,Sdiff = L.cstep()
+        Ediff,Sdiff = L.step()
         Etotal += Ediff
         sys.stdout.flush()
         Stotal += Sdiff
