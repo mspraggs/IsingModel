@@ -32,7 +32,7 @@ def runparams(param,n_equil=500000,n_calc=250000):
 
     fileio.writedata("results/%s.txt" % L.config,[Etotals,Stotals])
 
-Ts = [5.]#[0.01*(x+1) for x in xrange(0,500)]
+Ts = [0.01*(x+1) for x in xrange(0,500)]
 ns = [20]
 states = [1]
 Js = [1.]
