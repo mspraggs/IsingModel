@@ -1,4 +1,3 @@
-import pp
 import time
 import lattice,fileio
 import os,sys
